@@ -46,17 +46,27 @@
         <button class="no" onmouseover="moveButton()">No</button>
     </div>
     <script>
-        let direction = 1;
-        function moveButton() {
+       function moveButton() {
             let button = document.querySelector('.no');
-            let maxX = window.innerWidth - button.offsetWidth - 20;
+            let maxX = window.innerWidth - button.offsetWidth;
+            let maxY = window.innerHeight - button.offsetHeight;
+            
             let currentX = button.offsetLeft;
-            
-            if (currentX >= maxX || currentX <= 0) {
-                direction *= -1;
+            let currentY = button.offsetTop;
+
+            // Bounce off edges
+            if (currentX + dx > maxX || currentX + dx < 0) {
+                dx = -dx;
             }
-            
-            button.style.left = `${currentX + (10 * direction)}px`;
+            if (currentY + dy > maxY || currentY + dy < 0) {
+                dy = -dy;
+            if (currentX + step * direction > maxX || currentX + step * direction < 0) {
+                direction *= -1; // Reverse direction on hitting boundary
+            }
+
+            button.style.left = `${currentX + dx}px`;
+            button.style.top = `${currentY + dy}px`;
+            button.style.left = `${currentX + step * direction}px`;
         }
     </script>
 </body>
